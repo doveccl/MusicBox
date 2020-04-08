@@ -1,0 +1,5 @@
+{
+  "name": "manage",
+  "script": "index.js",
+  "cwd": "./"
+}
