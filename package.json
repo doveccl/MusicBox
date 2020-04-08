@@ -1,0 +1,18 @@
+{
+  "name": "music",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Doveccl",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --ignore data/ index.js"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.0",
+    "koa": "^2.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
