@@ -10,15 +10,16 @@ let users = [], songs = []
 class User {
   name = ''
   hash = ''
+  token = ''
   admin = 0
   constructor({ name, hash, admin }) {
     this.name = name
     this.hash = hash
     this.admin = admin
+    this.token = md5(this.name + this.hash)
   }
   verify(password) {
     if (this.hash === md5(password)) {
-      this.token = md5(this.hash + Date.now())
       return true
     } else {
       return false
