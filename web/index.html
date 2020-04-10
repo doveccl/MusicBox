@@ -183,9 +183,10 @@
     </div>
 
     <div v-if="form.manage">
-      <el-table :data="list" border stripe>
+      <el-table :data="showList" :default-sort = "{prop: 'priority'}" border stripe>
         <el-table-column prop="title" label="歌名"></el-table-column>
         <el-table-column prop="artist" label="歌手"></el-table-column>
+        <el-table-column prop="priority" label="优先级" sortable sort-by="priority"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
