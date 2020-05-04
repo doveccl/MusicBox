@@ -287,8 +287,8 @@
         document.querySelectorAll('pre.music').forEach(el => {
           if (el.dataset.music) {
             el.innerHTML = el.dataset.music
-              .replace(/(\d)\-+/g, '<span class="low">$1</span>')
-              .replace(/(\d)\++/g, '<span class="high">$1</span>')
+              .replace(/(\d)[#b]?\-+/g, '<span class="low">$1</span>')
+              .replace(/(\d)[#b]?\++/g, '<span class="high">$1</span>')
               .replace(/([#b])/g, '<sup>$1</sup>')
           }
         })
@@ -326,6 +326,7 @@
           this.user.token = ''
           this.user.admin = 0
           localStorage.removeItem('token')
+		  delete axios.defaults.headers.common.token
         },
         search() {
           this.form.loading = true
@@ -410,7 +411,7 @@
           } else {
             this.playing = true
           }
-          let offset = 0, sounds = music.match(/\d#?(\+|\-)*\s*/g)
+          let offset = 200, sounds = music.match(/\d[#b]?(\+|\-)*\s*/g)
           if (!sounds) { this.playing = false }
           for (const i in sounds) {
             const sound = sounds[i]
