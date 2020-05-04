@@ -287,8 +287,8 @@
         document.querySelectorAll('pre.music').forEach(el => {
           if (el.dataset.music) {
             el.innerHTML = el.dataset.music
-              .replace(/(\d)[#b]?\-+/g, '<span class="low">$1</span>')
-              .replace(/(\d)[#b]?\++/g, '<span class="high">$1</span>')
+              .replace(/(\d)([#b]?)\-+/g, '<span class="low">$1</span>$2')
+              .replace(/(\d)([#b]?)\++/g, '<span class="high">$1</span>$2')
               .replace(/([#b])/g, '<sup>$1</sup>')
           }
         })
