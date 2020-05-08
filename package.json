@@ -1,18 +1,21 @@
 {
-  "name": "music",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "music-box",
+  "version": "2.0.0",
   "author": "Doveccl",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon --ignore data/ index.js"
+    "dev": "ts-node src/index.ts",
+    "build": "tsc"
   },
   "dependencies": {
-    "fs-extra": "^9.0.0",
-    "koa": "^2.11.0"
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^4.2.0",
+    "typeorm": "^0.2.24"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "@types/node": "^13.13.5",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.3"
   }
 }

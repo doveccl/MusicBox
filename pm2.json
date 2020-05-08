@@ -1,5 +1,5 @@
 {
-  "name": "manage",
-  "script": "index.js",
+  "name": "MusicBox",
+  "script": "./dist",
   "cwd": "./"
 }
