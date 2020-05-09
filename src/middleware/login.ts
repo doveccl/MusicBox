@@ -10,5 +10,9 @@ export default async function (ctx: Context, next: Next) {
       ctx.user = user
     }
   }
-  await next()
+  if (ctx.user || ctx.url === '/user/login') {
+    await next()
+  } else {
+    ctx.body = { err: -1, msg: 'not login' }
+  }
 }

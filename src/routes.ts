@@ -1,5 +1,5 @@
 import { Login } from './controller/user'
-import { GetSong } from './controller/song'
+import { GetSong, AddSong } from './controller/song'
 
 export default [{
   path: '/user/login',
@@ -9,4 +9,8 @@ export default [{
   path: '/song',
   method: 'get',
   action: GetSong
+}, {
+  path: '/song',
+  method: 'post',
+  action: AddSong
 }]
