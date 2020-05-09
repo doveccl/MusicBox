@@ -6,6 +6,9 @@ export class Song extends BaseEntity {
   id: number
 
   @Column()
+  index: string
+
+  @Column()
   title: string
 
   @Column()

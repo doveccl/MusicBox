@@ -1,7 +1,0 @@
-{
-  "type": "sqlite",
-  "database": "data.sqlite",
-  "entities": [
-    "src/entity/**/*.ts"
-  ]
-}
