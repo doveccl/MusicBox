@@ -10,6 +10,9 @@ module.exports = {
   resolve: {
     extensions: [ '.vue', '.js' ]
   },
+  externals: {
+    webmidi: 'null'
+  },
   module: {
     rules: [
       {
