@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import ElementUI from 'element-ui'
 
 import App from './app'
+import Home from './pages/home'
 import Login from './pages/login'
 
 import 'element-ui/lib/theme-chalk/index.css'
@@ -16,8 +17,9 @@ new Vue({
   router: new VueRouter({
     mode: 'history',
     routes: [
-      { path: '/' },
-      { path: '/login', component: Login }
+      { path: '/', component: Home },
+      { path: '/login', component: Login },
+      { path: '*', redirect: '/' }
     ]
   })
 })

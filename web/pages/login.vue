@@ -45,7 +45,6 @@ export default {
           localStorage.setItem('token', token)
           localStorage.setItem('user', JSON.stringify(user))
           axios.defaults.headers.common.token = token
-          window.dispatchEvent(new Event('login'))
           this.$message.success(`Welcome ${user.name}`)
           this.$router.replace('/')
         }
