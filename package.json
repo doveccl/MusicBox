@@ -25,6 +25,7 @@
     "@types/koa-router": "^7.4.0",
     "@types/node": "^13.13.5",
     "@types/pinyin": "^2.8.1",
+    "axios": "^0.19.2",
     "css-loader": "^3.5.3",
     "element-ui": "^2.13.1",
     "file-loader": "^6.0.0",

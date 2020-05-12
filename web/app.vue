@@ -1,24 +1,25 @@
 <template>
-  <el-container>
-    <el-header>
-      <el-menu mode="horizontal">
-        <el-menu-item>
-          <el-input v-model="searchText" size="small" >
-            <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
-          </el-input>
-        </el-menu-item>
-        <el-submenu index="user-menu">
-          <template slot="title">{{ user.name || '游客' }}</template>
-          <el-menu-item v-if="!user.name" @click="login">登录</el-menu-item>
-          <el-menu-item v-if="user.name" @click="logout">退出</el-menu-item>
-        </el-submenu>
-      </el-menu>
-    </el-header>
-    <router-view></router-view>
-  </el-container>
+  <el-row type="flex" justify="center">
+    <el-col :xs="24" :sm="20" :md="16" :lg="12" :xl="8">
+      <el-input v-model="searchText">
+        <el-dropdown split-button slot="append" @command="command" @click="search">
+          <span>搜索</span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item v-if="!user.name" command="login">登录</el-dropdown-item>
+            <el-dropdown-item v-if="user.admin" command="admin">管理模式</el-dropdown-item>
+            <el-dropdown-item v-if="user.name" command="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-input>
+      <el-divider></el-divider>
+      <router-view></router-view>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -29,28 +30,32 @@ export default {
       }
     }
   },
+  created() {
+    if (axios.defaults.headers.common.token = localStorage.getItem('token')) {
+      axios.post('/user/login').then(({ data }) => {
+        if (!data.err) { this.user = data.user }
+      })
+    }
+    window.addEventListener('login', () => {
+      this.user = JSON.parse(localStorage.getItem('user'))
+    })
+  },
   methods: {
     search() {
-      console.log(this.searchText)
+      this.$router.push(`/s/${this.searchText}`)
     },
-    login() {
-      this.$router.push('/login')
-    },
-    logout() {
-      this.user.name = ''
+    command(cmd) {
+      if (cmd === 'login') {
+        this.$router.replace('/login')
+      } else if (cmd === 'admin') {
+        this.$router.push('/admin')
+      } else if (cmd === 'logout') {
+        this.user.name = ''
+        localStorage.removeItem('token')
+        delete axios.defaults.headers.common.token
+        this.$router.replace('/login')
+      }
     }
   }
 }
 </script>
-
-<style scoped>
-.el-menu-item .el-input {
-  width: 50vw;
-  max-width: 300px;
-}
-@media screen and (max-width: 600px) {
-  .el-input-group__append button {
-    padding: 12px;
-  }
-}
-</style>
