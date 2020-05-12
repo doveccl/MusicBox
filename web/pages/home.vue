@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input v-model="search">
+    <el-input v-model="search" @keyup.enter.native="find" clearable>
       <el-dropdown split-button slot="append" @command="command" @click="find">
         <span>搜索</span>
         <el-dropdown-menu slot="dropdown">
@@ -10,6 +10,7 @@
       </el-dropdown>
     </el-input>
     <el-divider></el-divider>
+    <song v-for="song in songs" :key="song.id" :info="song" :admin="user.admin"></song>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      list: [],
       search: '',
       user: {
         name: '',
@@ -31,12 +33,25 @@ export default {
     const user = JSON.parse(localStorage.getItem('user'))
     if (user) { this.user = user }
   },
+  computed: {
+    songs() {
+      return this.list.sort((a, b) => a.priority - b.priority)
+    }
+  },
   methods: {
     find() {
-      const { search } = this
       const loading = this.$loading()
-      axios.get('/song', { search }).then(({ data }) => {
-        
+      axios.get('/song', { params: {
+        take: 100, search: this.search
+      } }).then(({ data }) => {
+        if (data.err) {
+          this.$message.error(data.msg)
+        } else {
+          this.list = data.list
+          if (data.list.length === 0) {
+            this.$message.warning('无结果')
+          }
+        }
       }).finally(() => {
         loading.close()
       })

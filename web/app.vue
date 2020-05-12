@@ -1,6 +1,6 @@
 <template>
   <el-row type="flex" justify="center">
-    <el-col :xs="24" :sm="20" :md="16" :lg="12" :xl="8">
+    <el-col :xs="24" :sm="20" :md="16" :xl="12">
       <router-view></router-view>
     </el-col>
   </el-row>

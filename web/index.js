@@ -5,11 +5,13 @@ import ElementUI from 'element-ui'
 import App from './app'
 import Home from './pages/home'
 import Login from './pages/login'
+import Song from './components/song'
 
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(VueRouter)
 Vue.use(ElementUI)
+Vue.component('song', Song)
 
 new Vue({
   el: '#app',
