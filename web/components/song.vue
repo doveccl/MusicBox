@@ -26,10 +26,10 @@
     <div v-if="edit">
       <el-form :model="form" label-width="3em" size="small">
         <el-form-item label="歌名">
-          <el-input v-model="form.title"></el-input>
+          <el-input v-model="form.title" clearable></el-input>
         </el-form-item>
         <el-form-item label="歌手">
-          <el-input v-model="form.artist"></el-input>
+          <el-input v-model="form.artist" clearable></el-input>
         </el-form-item>
         <el-form-item label="歌词">
           <el-input v-model="form.lyric" type="textarea" autosize></el-input>
