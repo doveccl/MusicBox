@@ -72,7 +72,7 @@ export default {
     axios.defaults.headers.common.token = localStorage.getItem('token')
     const user = JSON.parse(localStorage.getItem('user'))
     if (user) { this.user = user }
-    window.onresize = this.update
+    window.addEventListener('resize', this.update)
     this.update()
   },
   computed: {
@@ -170,6 +170,9 @@ body {
 .header .el-col {
   padding: 8px;
   border-bottom: 1px #eee solid;
+}
+.el-message-box {
+  max-width: 100vw;
 }
 @media screen and (max-width: 900px) {
   .el-dialog {
