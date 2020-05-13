@@ -2,7 +2,12 @@
   <el-card class="song">
     <div slot="header" v-if="!edit">
       <el-row type="flex" justify="space-between" align="middle">
-        <el-checkbox>{{ form.title }} - {{ form.artist }}</el-checkbox>
+        <el-checkbox>
+          <span>{{ form.title }}</span>
+          <span>-</span>
+          <span>{{ form.artist }}</span>
+          <span>({{ form.priority }})</span>
+        </el-checkbox>
         <el-dropdown v-if="admin" @command="command" trigger="click">
           <i class="el-icon-more"></i>
           <el-dropdown-menu slot="dropdown">
