@@ -50,6 +50,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="modify">修改</el-button>
+          <el-button :type="type" @click="click">{{ playing ? '结束' : '试听' }}</el-button>
           <el-button @click="cancel">取消</el-button>
         </el-form-item>
       </el-form>
