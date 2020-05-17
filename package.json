@@ -7,7 +7,7 @@
   "scripts": {
     "dev:server": "ts-node ./src",
     "dev:web": "webpack --watch --mode development",
-    "build": "tsc && webpack --mode production"
+    "build": "rm -rf dist static && tsc && webpack --mode production"
   },
   "dependencies": {
     "koa": "^2.11.0",

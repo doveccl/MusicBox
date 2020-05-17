@@ -5,6 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
   entry: './web/index.js',
   output: {
+    filename: "[name].[hash:8].js",
     path: path.resolve(__dirname, 'static')
   },
   resolve: {
@@ -21,7 +22,10 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        loader: 'file-loader'
+        loader: 'file-loader',
+        options: {
+          name: '[hash:8].[ext]',
+        }
       },
       {
         test: /\.css$/,
