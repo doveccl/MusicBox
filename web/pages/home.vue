@@ -7,6 +7,7 @@
             <span>搜索</span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item v-if="!user.name" command="login">登录</el-dropdown-item>
+              <el-dropdown-item v-if="user.name" command="switch">切换空格显示</el-dropdown-item>
               <el-dropdown-item v-if="user.admin" command="add">添加歌曲</el-dropdown-item>
               <el-dropdown-item v-if="user.name" command="logout">退出</el-dropdown-item>
             </el-dropdown-menu>
@@ -14,7 +15,7 @@
         </el-input>
       </el-col>
     </el-row>
-    <song v-for="song in songs" @deleted="remove" :admin="user.admin" :key="song.id" :info="song"></song>
+    <song v-for="song in songs" @deleted="remove" :admin="user.admin" :space="space" :key="song.id" :info="song"></song>
     <el-dialog title="添加歌曲" :width="width" :visible.sync="dialog">
       <el-form :model="form" label-width="3em">
         <el-form-item label="歌名">
@@ -57,6 +58,7 @@ export default {
         admin: 0
       },
       width: '95%',
+      space: localStorage.getItem('space'),
       dialog: false,
       form: {
         title: '',
@@ -109,6 +111,13 @@ export default {
         this.$router.replace('/login')
       } else if (cmd === 'add') {
         this.dialog = true
+      } else if (cmd === 'switch') {
+        this.space = !this.space
+        if (this.space) {
+          localStorage.setItem('space', 1)
+        } else {
+          localStorage.removeItem('space')
+        }
       }
     },
     update() {
