@@ -95,11 +95,11 @@ export default {
     },
     sounds() {
       if (!this.form.music) { return '' }
-      const html = this.form.music
+      return this.form.music
+        .replace(/ /g, this.space ? '␣' : ' ')
         .replace(/(\d)([#b]?)\-+/g, '<span class="low">$1</span>$2')
         .replace(/(\d)([#b]?)\++/g, '<span class="high">$1</span>$2')
         .replace(/([#b])/g, '<sup>$1</sup>')
-      return this.space ? html.replace(/ /g, '␣') : html
     }
   },
   methods: {
