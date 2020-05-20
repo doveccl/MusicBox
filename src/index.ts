@@ -19,4 +19,4 @@ app.use(router.allowedMethods())
 createConnection().then(() => {
   app.listen(12356)
   console.log('listening port:', 12356)
-}).catch(err => console.error(err))
+}).catch(console.error)

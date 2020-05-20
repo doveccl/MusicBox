@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
+import { pinyin, abbr } from '../util/pinyin'
 
 @Entity()
 export class Song extends BaseEntity {
@@ -28,4 +29,13 @@ export class Song extends BaseEntity {
 
   @Column({ default: false })
   deleted: boolean
+
+  generateIndex() {
+    const index = [this.title, this.artist]
+    index.push(pinyin(this.title))
+    index.push(abbr(this.title))
+    index.push(pinyin(this.artist))
+    index.push(abbr(this.artist))
+    return index.join('|')
+  }
 }

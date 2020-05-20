@@ -1,23 +1,12 @@
-import * as pinyin from 'pinyin'
 import { Context } from 'koa'
 import { Like, FindConditions } from 'typeorm'
 import { Song } from '../entity/Song'
-
-function getPinYin(str: string, search = false) {
-  return pinyin(str, {
-    heteronym: true,
-    style: pinyin.STYLE_NORMAL
-  }).map(a => a.join(''))
-    .join('').split('')
-    .filter(c => /[a-zA-Z0-9]/.test(c))
-    .join(search ? '%' : '')
-}
 
 export async function GetSong(ctx: Context) {
   const { search, skip, take } = ctx.query
   let where: FindConditions<Song> = { deleted: false }
   if (typeof search === 'string') {
-    where.index = Like('%' + getPinYin(search, true) + '%')
+    where.index = Like(`%${search}%`)
   }
   const res = await Song.findAndCount({ where, skip, take })
   ctx.body = { count: res[1], list: res[0] }
@@ -28,7 +17,7 @@ function fillSong(song: Song, data: any) {
     ['title', 'artist', 'priority', 'lyric', 'music', 'danger'].forEach(k => {
       if (k in data) { song[k] = data[k] }
     })
-    song.index = getPinYin(song.title + song.artist)
+    song.index = song.generateIndex()
   }
 }
 
