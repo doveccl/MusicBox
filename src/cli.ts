@@ -25,10 +25,6 @@ const question = (query = '> ') => new Promise<string>(resolve => {
 })
 
 createConnection().then(async () => {
-  const s = new Song()
-  s.title = '大太阳'
-  s.artist = '张靓颖'
-  console.log(s.generateIndex())
   console.table(commands)
   while (true) {
     switch (await question()) {
