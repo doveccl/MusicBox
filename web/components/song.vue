@@ -3,7 +3,7 @@
     <div slot="header" v-if="!edit">
       <el-row type="flex" justify="space-between" align="middle">
         <el-checkbox>
-          <span>{{ form.title }}</span>
+          <span>{{ title }}</span>
           <span>-</span>
           <span>{{ form.artist }}</span>
           <span>({{ form.priority }})</span>
@@ -81,6 +81,13 @@ export default {
     }
   },
   computed: {
+    title() {
+      const text = this.form.title
+      let lim = Math.floor(window.innerWidth / 14)
+      lim -= this.form.artist.length + 11
+      if (text.length <= lim) { return text }
+      return text.substr(0, lim - 1) + '…'
+    },
     icon() {
       return `el-icon-${this.playing ? 'close' : 'caret-right'}`
     },
