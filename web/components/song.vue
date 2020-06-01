@@ -122,11 +122,8 @@ export default {
         this.length = this.current = 0
       } else {
         this.length = play(this.form.music, current => {
-          if (current === this.length) {
-            this.length = this.current = 0
-          } else {
-            this.current = current
-          }
+          this.current = current
+          if (!current) { this.length = 0 }
         })
       }
     },

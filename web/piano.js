@@ -1,32 +1,28 @@
 import { Piano } from '@tonejs/piano'
 
-const SoundTime = 125
+const SoundTime = 150
 const NumNote = ['0', 'C', 'D', 'E', 'F', 'G', 'A', 'B']
 
 const piano = new Piano({ url: '/audio' })
 piano.toDestination()
 piano.load()
 
-const timers = []
-let playing = false
+let ops = []
+let start = 0
+let cb = () => {}
 
 export function stop() {
+  ops = []
   piano.stopAll()
-  playing = false
-  while (timers.length) {
-    clearTimeout(timers.pop())
-  }
+  start = 0
 }
 
-export function play(music, cb = () => {}) {
-  if (playing || typeof music !== 'string') {
-    return 0
-  }
+export function play(music, _cb = () => {}) {
+  if (start || typeof music !== 'string') return 0
   const matchs = music.match(/[0-7][#b]?(\-+|\++)? */g)
-  if (!piano.loaded || !matchs) {
-    return 0
-  }
-  let offset = SoundTime
+  if (!piano.loaded || !matchs) return 0
+  let offset = 2 * SoundTime
+  cb = _cb; start = Date.now()
   for (const match of matchs) {
     let note = NumNote[match[0]]
     let block = 4, duration = SoundTime
@@ -43,17 +39,27 @@ export function play(music, cb = () => {}) {
     }
     note += block
     if (match[0] !== '0') {
-      timers.push(
-        setTimeout(() => piano.keyDown({ note }), offset),
-        setTimeout(() => piano.keyUp({ note }), offset + duration)
-      )
+      ops.push({ note, down: true, time: start + offset })
+      ops.push({ note, down: false, time: start + offset + duration })
     }
-    const t = offset + duration
-    timers.push(setTimeout(() => cb(t), t))
     offset += duration
   }
-  timers.push(setTimeout(() => cb(SoundTime), SoundTime))
-  timers.push(setTimeout(stop, offset))
-  playing = true
   return offset
 }
+
+let p = 0; (function loop() {
+  if (ops.length && Date.now() >= ops[0].time) {
+    const { note, down } = ops.shift()
+    piano[down ? 'keyDown' : 'keyUp']({ note })
+  }
+  if (start) {
+    const now = Date.now()
+    if (now - p > 100) {
+      cb(now - start)
+      p = now
+    } else if (!ops.length) {
+      stop(cb(0))
+    }
+  }
+  requestAnimationFrame(loop)
+})()
