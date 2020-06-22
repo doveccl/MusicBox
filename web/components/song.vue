@@ -98,7 +98,8 @@ export default {
       return this.current !== this.length
     },
     percentage() {
-      return (100 * this.current / this.length) || 0
+      const ret = 100 * this.current / this.length
+      return Math.min(100, Math.floor(ret || 0))
     },
     sounds() {
       if (!this.form.music) { return '' }

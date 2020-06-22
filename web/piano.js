@@ -23,6 +23,11 @@ export function play(music, _cb = () => {}) {
   if (!piano.loaded || !matchs) return 0
   let offset = 2 * SoundTime
   cb = _cb; start = Date.now()
+  if (/(iPhone|iPad)/.test(navigator.userAgent)) {
+    piano.keyDown({ note: 'C1', velocity: 1 })
+    piano.keyUp({ note: 'C1', velocity: 1 })
+    offset += 2 * SoundTime
+  }
   for (const match of matchs) {
     let note = NumNote[match[0]]
     let block = 4, duration = SoundTime
