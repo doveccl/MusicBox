@@ -52,7 +52,7 @@ export function play(music, _cb = () => {}) {
   return offset
 }
 
-let p = 0; (function loop() {
+let p = 0; setInterval(() => {
   if (ops.length && Date.now() >= ops[0].time) {
     const { note, down } = ops.shift()
     piano[down ? 'keyDown' : 'keyUp']({ note })
@@ -66,5 +66,4 @@ let p = 0; (function loop() {
       stop(cb(0))
     }
   }
-  requestAnimationFrame(loop)
-})()
+}, 10)
