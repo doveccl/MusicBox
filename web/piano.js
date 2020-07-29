@@ -11,9 +11,25 @@ let ops = []
 let start = 0
 let cb = () => {}
 
+let pre = 0, timer = null, loop = () => {
+  if (!start) return
+  const now = Date.now()
+  if (ops.length && now >= ops[0].time) {
+    const { note, down } = ops.shift()
+    piano[down ? 'keyDown' : 'keyUp']({ note })
+  }
+  if (now - pre > 100) {
+    cb(now - start)
+    pre = now
+  } else if (!ops.length) {
+    stop(cb(0))
+  }
+}
+
 export function stop() {
   ops = []
   piano.stopAll()
+  clearInterval(timer)
   start = 0
 }
 
@@ -49,21 +65,6 @@ export function play(music, _cb = () => {}) {
     }
     offset += duration
   }
+  setInterval(loop, 10)
   return offset
 }
-
-let p = 0; setInterval(() => {
-  if (ops.length && Date.now() >= ops[0].time) {
-    const { note, down } = ops.shift()
-    piano[down ? 'keyDown' : 'keyUp']({ note })
-  }
-  if (start) {
-    const now = Date.now()
-    if (now - p > 100) {
-      cb(now - start)
-      p = now
-    } else if (!ops.length) {
-      stop(cb(0))
-    }
-  }
-}, 10)
