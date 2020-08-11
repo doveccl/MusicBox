@@ -83,11 +83,10 @@ export default {
   computed: {
     songs() {
       return this.list.sort((a, b) => {
-        console.log(a.check, b.check)
-        if (a.check === b.check) {
-          return a.priority - b.priority
-        }
-        return a.check - b.check
+        // DO NOT USE ===
+        return a.check == b.check ?
+          a.priority - b.priority :
+          Number(a.check) - Number(b.check)
       })
     }
   },
@@ -100,7 +99,10 @@ export default {
         if (data.err) {
           this.$message.error(data.msg)
         } else {
-          this.list = data.list
+          this.list = data.list.map(song => {
+            song.check = false
+            return song
+          })
           if (data.list.length === 0) {
             this.$message.warning('无结果')
           }

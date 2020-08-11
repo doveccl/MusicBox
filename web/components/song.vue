@@ -2,7 +2,7 @@
   <el-card class="song">
     <div slot="header" v-if="!edit">
       <el-row type="flex" justify="space-between" align="middle">
-        <el-checkbox @change="check">
+        <el-checkbox v-model="info.check">
           <span>{{ title }}</span>
           <span>-</span>
           <span>{{ form.artist }}</span>
