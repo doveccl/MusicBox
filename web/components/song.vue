@@ -2,7 +2,7 @@
   <el-card class="song">
     <div slot="header" v-if="!edit">
       <el-row type="flex" justify="space-between" align="middle">
-        <el-checkbox>
+        <el-checkbox @change="check">
           <span>{{ title }}</span>
           <span>-</span>
           <span>{{ form.artist }}</span>
@@ -111,6 +111,15 @@ export default {
     }
   },
   methods: {
+    check(checked) {
+      if (checked) {
+        this.info.check = 1
+      } else {
+        this.info.check = 0
+      }
+      this.info.priority += 0.1
+      this.info.priority -= 0.1
+    },
     format(p) {
       const ms = p * this.length / 100
       const m = String(Math.floor(ms / 1000 / 60))

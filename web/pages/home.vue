@@ -15,7 +15,9 @@
         </el-input>
       </el-col>
     </el-row>
-    <song v-for="song in songs" @deleted="remove" :admin="user.admin" :space="space" :key="song.id" :info="song"></song>
+    <transition-group name="flip-list" tag="div">
+      <song v-for="song in songs" @deleted="remove" :admin="user.admin" :space="space" :key="song.id" :info="song"></song>
+    </transition-group>
     <el-dialog title="添加歌曲" :width="width" :visible.sync="dialog">
       <el-form :model="form" label-width="3em">
         <el-form-item label="歌名">
@@ -47,6 +49,7 @@
 
 <script>
 import axios from 'axios'
+import { constants } from 'crypto'
 
 export default {
   data() {
@@ -79,7 +82,13 @@ export default {
   },
   computed: {
     songs() {
-      return this.list.sort((a, b) => a.priority - b.priority)
+      return this.list.sort((a, b) => {
+        console.log(a.check, b.check)
+        if (a.check === b.check) {
+          return a.priority - b.priority
+        }
+        return a.check - b.check
+      })
     }
   },
   methods: {
@@ -182,6 +191,9 @@ body {
 }
 .el-message-box {
   max-width: 100vw;
+}
+.flip-list-move {
+  transition: transform 1s;
 }
 @media screen and (max-width: 900px) {
   .el-dialog {
