@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
   entry: './web/index.js',
   output: {
-    filename: "[name].[hash:8].js",
+    filename: "[name].js",
     path: path.resolve(__dirname, 'static')
   },
   resolve: {
@@ -21,11 +21,8 @@ module.exports = {
         loader: 'vue-loader'
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[hash:8].[ext]',
-        }
+        test: /\.(woff|ttf)$/,
+        loader: 'file-loader?name=[hash:8].[ext]'
       },
       {
         test: /\.css$/,
@@ -39,7 +36,9 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      template: 'web/index.html'
+      template: 'web/index.html',
+      favicon: 'web/icon.svg',
+      minify: false
     })
   ]
 }
