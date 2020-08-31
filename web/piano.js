@@ -1,11 +1,20 @@
 import { Piano } from '@tonejs/piano'
+import { Notification } from 'element-ui'
 
 const SoundTime = 150
 const NumNote = ['0', 'C', 'D', 'E', 'F', 'G', 'A', 'B']
 
-const piano = new Piano({ url: '/audio' })
+const loading = Notification({
+  title: '音频资源加载中…',
+  position: 'bottom-right',
+  message: '该提示会在音频加载成功后自动消失，如果长时间未加载成功，请尝试刷新页面',
+  duration: 0
+})
+
+const { __audioSrc: url } = window
+const piano = new Piano(url && { url })
+piano.load().then(() => loading.close())
 piano.toDestination()
-piano.load()
 
 let ops = []
 let start = 0
