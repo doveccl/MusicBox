@@ -11,8 +11,7 @@ const loading = Notification({
   duration: 0
 })
 
-const { __audioSrc: url } = window
-const piano = new Piano(url && { url })
+const piano = new Piano({ url: './audio' })
 piano.load().then(() => loading.close())
 piano.toDestination()
 

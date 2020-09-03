@@ -3,18 +3,16 @@ const WebpackCdnPlugin = require('webpack-cdn-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = (env, argv) => {
   const dev = argv.mode === 'development'
-  const prod = argv.mode === 'production'
-  const min = prod ? '.min' : ''
+  const min = dev ? '' : '.min'
 
-  const config = {
-    entry: {
-      app: './web/index.js'
-    },
+  return {
+    entry: './web',
     output: {
-      filename: "[name].[hash:8].js",
+      filename: "[name].[hash:4].js",
       path: path.resolve(__dirname, 'static')
     },
     resolve: {
@@ -36,7 +34,7 @@ module.exports = (env, argv) => {
         {
           test: /\.css$/,
           use: [
-            'vue-style-loader',
+            MiniCssExtractPlugin.loader,
             'css-loader'
           ]
         }
@@ -53,26 +51,33 @@ module.exports = (env, argv) => {
         }
       }),
       new WebpackCdnPlugin({
-				modules: [
+        publicPath: '/node_modules',
+        prod: argv.mode === 'production',
+        modules: [
           { name: 'axios', path: `dist/axios${min}.js` },
+          { name: 'tone', var: 'Tone', path: 'build/Tone.js' },
           { name: 'vue', var: 'Vue', path: `dist/vue.runtime${min}.js` },
           { name: 'vue-router', var: 'VueRouter', path: `dist/vue-router${min}.js`},
-					{ name: 'element-ui', var: 'ELEMENT', path: `lib/index.js`, style: `lib/theme-chalk/index.css` }
-				],
-				prod, publicPath: '/node_modules'
-			}),
-			new MiniCssExtractPlugin({
-				filename: '[name].[hash:8].css'
-			})
+          { name: 'element-ui', var: 'ELEMENT', path: `lib/index.js`, style: `lib/theme-chalk/index.css` }
+        ]
+      }),
+      new MiniCssExtractPlugin({
+        filename: '[name].[hash:4].css'
+      }),
+      new OptimizeCssAssetsPlugin()
     ],
     devtool: dev ? 'inline-source-map' : undefined,
     devServer: {
       historyApiFallback: true,
       proxy: [{
+        changeOrigin: true,
         context: ['/user', '/song'],
-        target: 'http://localhost:12356',
+        target: 'http://localhost:12356'
+      }, {
+        changeOrigin: true,
+        context: ['/audio'],
+        target: 'https://tambien.github.io/Piano'
       }]
     }
   }
-  return config
 }
