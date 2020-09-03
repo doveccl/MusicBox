@@ -7,8 +7,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 module.exports = (env, argv) => {
   const dev = argv.mode === 'development'
   const prod = argv.mode === 'production'
-  const element = prod ? 'index' : 'element-ui.common'
-  const mode = prod ? 'prod' : 'dev'
   const min = prod ? '.min' : ''
 
   const config = {
@@ -59,7 +57,7 @@ module.exports = (env, argv) => {
           { name: 'axios', path: `dist/axios${min}.js` },
           { name: 'vue', var: 'Vue', path: `dist/vue.runtime${min}.js` },
           { name: 'vue-router', var: 'VueRouter', path: `dist/vue-router${min}.js`},
-					{ name: 'element-ui', var: 'Element', path: `lib/index.js`, style: `lib/theme-chalk/index.css` }
+					{ name: 'element-ui', var: 'ELEMENT', path: `lib/index.js`, style: `lib/theme-chalk/index.css` }
 				],
 				prod, publicPath: '/node_modules'
 			}),
