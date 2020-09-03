@@ -7,14 +7,17 @@ import Home from './pages/home'
 import Login from './pages/login'
 import Song from './components/song'
 
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(VueRouter)
 Vue.use(ElementUI)
 Vue.component('song', Song)
 
+const app = document.createElement('div')
+document.body.appendChild(app)
+
 new Vue({
-  el: '#app',
+  el: app,
   render: h => h(App),
   router: new VueRouter({
     mode: 'history',
