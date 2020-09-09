@@ -93,6 +93,7 @@ export default {
   methods: {
     find() {
       const loading = this.$loading()
+      this.search = this.search.trim()
       axios.get('/song', { params: {
         take: 100, search: this.search
       } }).then(({ data }) => {
