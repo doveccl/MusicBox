@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
   return {
     entry: './web',
     output: {
-      filename: "[name].[hash:4].js",
+      filename: "[name].[contenthash:4].js",
       path: path.resolve(__dirname, 'static')
     },
     resolve: {
@@ -62,7 +62,7 @@ module.exports = (env, argv) => {
         ]
       }),
       new MiniCssExtractPlugin({
-        filename: '[name].[hash:4].css'
+        filename: '[name].[contenthash:4].css'
       }),
       new OptimizeCssAssetsPlugin()
     ],
