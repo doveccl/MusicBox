@@ -2,8 +2,6 @@ const path = require('path')
 const WebpackCdnPlugin = require('webpack-cdn-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = (env, argv) => {
   const dev = argv.mode === 'development'
@@ -29,13 +27,21 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(woff|ttf)$/,
-          loader: 'file-loader?name=[hash:8].[ext]'
+          loader: 'file-loader',
+          options: {
+            name: '[hash:8].[ext]'
+          }
         },
         {
           test: /\.css$/,
           use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader'
+            'vue-style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                esModule: false
+              }
+            }
           ]
         }
       ]
@@ -60,11 +66,7 @@ module.exports = (env, argv) => {
           { name: 'vue-router', var: 'VueRouter', path: `dist/vue-router${min}.js`},
           { name: 'element-ui', var: 'ELEMENT', path: `lib/index.js`, style: `lib/theme-chalk/index.css` }
         ]
-      }),
-      new MiniCssExtractPlugin({
-        filename: '[name].[contenthash:4].css'
-      }),
-      new OptimizeCssAssetsPlugin()
+      })
     ],
     devtool: dev ? 'inline-source-map' : undefined,
     devServer: {

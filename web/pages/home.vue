@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-row class="header" type="flex" justify="center">
-      <el-col :xs="24" :sm="20" :md="16" :xl="12">
+      <el-col :span="24">
         <el-input v-model="search" @keyup.enter.native="find" clearable>
           <el-dropdown split-button slot="append" @command="command" @click="find" trigger="click">
             <span>搜索</span>
@@ -49,7 +49,6 @@
 
 <script>
 import axios from 'axios'
-import { constants } from 'crypto'
 
 export default {
   data() {
