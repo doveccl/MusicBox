@@ -97,14 +97,24 @@ export default {
         take: 100, search: this.search
       } }).then(({ data }) => {
         if (data.err) {
-          this.$message.error(data.msg)
+          this.$message({
+            showClose: true,
+            message: data.msg,
+            type: 'error',
+            offset: 64
+          })
         } else {
           this.list = data.list.map(song => {
             song.check = false
             return song
           })
           if (data.list.length === 0) {
-            this.$message.warning('无结果')
+            this.$message({
+              showClose: true,
+              message: '无结果',
+              type: 'warning',
+              offset: 64
+            })
           }
         }
       }).finally(() => {
@@ -147,14 +157,29 @@ export default {
       const loading = this.$loading()
       axios.post('/song', this.form).then(({ data }) => {
         if (data.err) {
-          this.$message.error(data.msg)
+          this.$message({
+            showClose: true,
+            message: data.msg,
+            type: 'error',
+            offset: 64
+          })
         } else {
           this.dialog = false
           this.list.push(data.song)
-          this.$message.success('添加成功')
+          this.$message({
+            showClose: true,
+            message: '添加成功',
+            type: 'success',
+            offset: 64
+          })
         }
       }).catch(({ message }) => {
-        this.$message.error(message)
+          this.$message({
+            showClose: true,
+            message: message,
+            type: 'error',
+            offset: 64
+          })
       }).finally(() => {
         loading.close()
       })
@@ -172,34 +197,23 @@ export default {
 </script>
 
 <style>
-body {
-  background: rgba(0, 0, 0, 0.02);
-}
 .container {
-  padding-top: 60px;
+  padding: 8px;
+  padding-top: 64px;
 }
 .header {
+  top: 0;
+  left: 0;
   width: 100%;
+  z-index: 999;
+  position: fixed;
   background: #fff;
   box-shadow: grey 0 0 5px;
-  position: fixed !important;
-  z-index: 999;
-  left: 0;
-  top: 0;
 }
 .header .el-col {
   padding: 8px;
-  border-bottom: 1px #eee solid;
-}
-.el-message-box {
-  max-width: 100vw;
 }
 .flip-list-move {
   transition: transform 1s;
-}
-@media screen and (max-width: 900px) {
-  .el-dialog {
-    width: 90%;
-  }
 }
 </style>

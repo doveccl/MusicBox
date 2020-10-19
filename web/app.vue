@@ -1,7 +1,10 @@
 <template>
-  <el-row type="flex" justify="center">
-    <el-col :span="24">
-      <router-view></router-view>
-    </el-col>
-  </el-row>
+  <router-view></router-view>
 </template>
+
+<style>
+  body {
+    margin: 0;
+    background: rgba(0, 0, 0, 0.02);
+  }
+</style>

@@ -1,4 +1,3 @@
-import { get } from 'https'
 import { promises, createReadStream, createWriteStream } from 'fs'
 import { Context, Next } from 'koa'
 import { User } from '../entity/User'
@@ -17,20 +16,7 @@ export default async function (ctx: Context, next: Next) {
   } else if (/^\/(user|song)/.test(ctx.url)) {
     ctx.body = { err: -1, msg: 'not login' }
   } else if (/^\/audio\//.test(ctx.url)) {
-    const local = `.${ctx.url}`
-    const remote = `https://tambien.github.io/Piano${ctx.url}`
-    try {
-      const s = await promises.stat(local)
-      if (!s.isFile()) { throw new Error('Not Found') }
-      ctx.body = createReadStream(local)
-    } catch (e) {
-      ctx.redirect(remote)
-      const f = createWriteStream(local)
-      get(remote, res => {
-        res.on('end', () => console.log('loaded', local))
-        res.pipe(f)
-      })
-    }
+    ctx.redirect(`https://tambien.github.io/Piano${ctx.url}`)
   } else {
     let path = `./static${ctx.url}`
     try {

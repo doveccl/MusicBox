@@ -1,18 +1,22 @@
 <template>
-  <el-card>
-    <div slot="header">登录</div>
-    <el-form :model="form">
-      <el-form-item label="用户名">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="form.password" type="password"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" :disabled="disabled" :loading="loading" @click="login">登录</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <el-row type="flex" justify="center">
+    <el-col :xs="24" :sm="21" :md="18" :lg="15" :xl="12">
+      <el-card style="margin: 10vh 8px;">
+        <div slot="header">登录</div>
+        <el-form :model="form">
+          <el-form-item label="用户名">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="密码">
+            <el-input v-model="form.password" type="password"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" :disabled="disabled" :loading="loading" @click="login">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
