@@ -3,7 +3,7 @@ const WebpackCdnPlugin = require('webpack-cdn-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-module.exports = (env, argv) => {
+module.exports = (_env, argv) => {
   const dev = argv.mode === 'development'
   const min = dev ? '' : '.min'
 
@@ -51,6 +51,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         title: 'Music Box',
         favicon: 'web/icon.svg',
+        minify: false,
         meta: {
           'viewport': 'width=device-width,initial-scale=1,maximum-scale=1',
           'apple-mobile-web-app-capable': 'yes'
