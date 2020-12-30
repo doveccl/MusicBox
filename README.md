@@ -18,3 +18,8 @@ cp example.sqlite data.sqlite
 ```sh
 node dist
 ```
+
+4. usage
+
+open http://127.0.0.1:12356
+use `admin` / `admin` to login
