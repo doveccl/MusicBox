@@ -1,5 +1,6 @@
 .DS_Store
 data.sqlite
+!example.sqlite
 
 node_modules/
 static/
