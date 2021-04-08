@@ -3,7 +3,10 @@ import { Like, FindConditions } from 'typeorm'
 import { Song } from '../entity/Song'
 
 export async function GetSong(ctx: Context) {
-  const { search, skip, take } = ctx.query
+  const skip = Number(ctx.query.skip)
+  const take = Number(ctx.query.take)
+  const search = ctx.query.search as string
+
   let where: FindConditions<Song> = { deleted: false }
   if (typeof search === 'string') {
     where.index = Like(`%${search}%`)

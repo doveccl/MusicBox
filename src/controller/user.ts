@@ -9,7 +9,7 @@ export async function Login(ctx: Context) {
     if (user && user.password === password) {
       const token = `${name}|${md5(password)}`
       ctx.body = { err: 0, user, token }
-      delete ctx.body.user.password
+      delete user.password
     } else {
       ctx.body = { err: 1, msg: 'invalid user/password' }
     }

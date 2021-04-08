@@ -1,17 +1,16 @@
 # MusicBox
 
-1. build
+1. install & build
 
 ```sh
 yarn
 yarn build
 ```
 
-2. copy config
+2. (optional) custom config
 
-```sh
-cp example.sqlite data.sqlite
-```
+- create `config.json`
+- fill [typeorm config](https://github.com/typeorm/typeorm/blob/master/docs/connection-options.md)
 
 3. run
 
