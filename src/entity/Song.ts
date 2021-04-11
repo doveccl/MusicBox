@@ -6,7 +6,7 @@ export class Song extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({ unique: true })
+  @Column('text')
   index: string
 
   @Column()
@@ -18,10 +18,10 @@ export class Song extends BaseEntity {
   @Column({ default: 0 })
   priority: number
 
-  @Column()
+  @Column('text')
   lyric: string
 
-  @Column({ nullable: true })
+  @Column('text', { nullable: true })
   music: string
 
   @Column({ default: false })
