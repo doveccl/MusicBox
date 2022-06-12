@@ -14,8 +14,10 @@ declare module '@vue/runtime-core' {
     NList: typeof import('naive-ui')['NList']
     NListItem: typeof import('naive-ui')['NListItem']
     NModal: typeof import('naive-ui')['NModal']
+    NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
     NSpace: typeof import('naive-ui')['NSpace']
     NThing: typeof import('naive-ui')['NThing']
+    PianoLoader: typeof import('./components/PianoLoader.vue')['default']
     SongDetail: typeof import('./components/SongDetail.vue')['default']
   }
 }
