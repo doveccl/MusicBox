@@ -6,17 +6,19 @@ export async function onRequest(ctx: IContext) {
   const pass = await get(ctx, 'pass')
   const token = await get(ctx, 'token')
 
+  const users = JSON.parse(await env.mbox.get('users') ?? '{}')
+  const admin = JSON.parse(await env.mbox.get('admin') ?? '[]')
+
   if (token) {
     const [n, m] = token.split('|')
-    const p = await env.user.get(n)
-    if (p && m === await hash(p)) {
+    if (users[n] && m === await hash(users[n])) {
       data.user = n
       data.token = token
     }
   }
 
   if (name && pass) {
-    const p = await env.user.get(name)
+    const p = users[name]
     if (p && pass === p) {
       data.user = name
       data.token = `${name}|${await hash(p)}`
@@ -27,7 +29,7 @@ export async function onRequest(ctx: IContext) {
     return json({ error: '未登录/鉴权失败' })
   else if (ctx.request.method === 'GET')
     return await ctx.next()
-  else if (env.admin.split('|').includes(data.user))
+  else if (admin.includes(data.user))
     return await ctx.next()
   else return json({ error: '无权限' })
 }

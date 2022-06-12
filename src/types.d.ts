@@ -1,5 +1,3 @@
-type IContext = EventContext<{ mbox: KVNamespace }, string, Record<string, unknown>>
-
 type ISong = {
   id: number
   index: string

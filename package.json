@@ -3,8 +3,9 @@
   "private": true,
   "version": "2.0.0",
   "scripts": {
-    "dev": "wrangler pages dev -k user -k song -b admin=admin -- vite",
-    "build": "vue-tsc --noEmit && vite build"
+    "dev": "wrangler pages dev -k mbox -- vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "lint": "eslint . --ext .vue,.ts"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -13,7 +14,11 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
     "@vitejs/plugin-vue": "^2.3.3",
+    "eslint": "^8.17.0",
+    "eslint-plugin-vue": "^9.1.1",
     "stylus": "^0.58.1",
     "typescript": "^4.7.3",
     "unplugin-auto-import": "^0.8.7",
@@ -21,5 +26,9 @@
     "vite": "^2.9.12",
     "vue-tsc": "^0.37.3",
     "wrangler": "2.0.9"
+  },
+  "optionalDependencies": {
+    "@types/mysql": "^2.15.21",
+    "mysql": "^2.18.1"
   }
 }
